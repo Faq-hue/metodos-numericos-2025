@@ -3,7 +3,7 @@ import copy
 
 def determinante(A, tol=1e-10):
     n = len(A)
-    #A = [fila[:] for fila in A]  # Copia para no modificar la original
+    A = [fila[:] for fila in A]  # Copia para no modificar la original
     det = 1
     
     for i in range(n):
@@ -61,8 +61,8 @@ def gauss_eliminacion(A, b, tol=1e-10):
 
 
 def main():
-    A = lecturaDatos.leerMatrizPrincipal("datos.dat")
-    b = lecturaDatos.leerMatrizResultante("datos2.dat")
+    A = lecturaDatos.leerMatrizPrincipal("../gauss/datos.dat")
+    b = lecturaDatos.leerMatrizResultante("../gauss/datos2.dat")
 
     # Copias profundas
     A_copy1 = copy.deepcopy(A)
@@ -71,7 +71,7 @@ def main():
 
     # Calcular determinante sin modificar A original
     det = determinante(A_copy1)
-    print(f"Determinante de la matriz: {det:.6f}")
+    #print(f"Determinante de la matriz: {det:.6f}")
 
     try:
         solucion = gauss_eliminacion(A_copy2, b_copy)

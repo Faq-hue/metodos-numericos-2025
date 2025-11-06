@@ -3,7 +3,9 @@ import math
 # === Definición de la función a integrar ===
 def f(x):
     # f(x) = (2 - x^3) * (x - 3)^2
-    return (2 - (x ** 3)) * ((x - 3) ** 2)
+    #return (2 - (x ** 3)) * ((x - 3) ** 2)
+    #return math.sin(x+1)/(x+1)
+    return math.sin(2*x)*pow(math.e,-x)
 
 # === Cambio de variable para Gauss-Legendre ===
 def g(x, a, b):

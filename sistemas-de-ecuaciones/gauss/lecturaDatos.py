@@ -48,5 +48,8 @@ def leerMatrizResultante(archivo):
         if linea.strip():
             numeros = [float(num) for num in linea.strip().split()]
             vector.extend(numeros)
+
+    #imprimirMatrizPrincipal([vector])  # Imprimir como una fila para consistencia
+
     return vector
 
