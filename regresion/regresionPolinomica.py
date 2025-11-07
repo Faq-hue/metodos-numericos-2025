@@ -7,8 +7,9 @@ Usa lecturaDatos.py para leer los datos
 """
 
 import numpy as np
+import math
 import lecturaDatos
-
+"""
 def build_normal_system(x, y, degree):
     n = len(x)
     m = np.zeros((degree+1, degree+1), dtype=float)
@@ -18,6 +19,26 @@ def build_normal_system(x, y, degree):
             m[i,j] = np.sum(x ** (i+j))
         b[i] = np.sum((x ** i) * y)
     return m, b
+"""
+def build_normal_system(x, y, grado=None):
+    """
+    Construye el sistema normal para el modelo f(x) = a + b*x + c*e^x
+    Ignora el parámetro 'grado' y arma la matriz de diseño manualmente.
+    """
+    n = len(x)
+    
+    # Matriz de diseño A con columnas [1, x, e^x]
+    A = np.zeros((n, 3))
+    for i in range(n):
+        A[i, 0] = 1
+        A[i, 1] = x[i]
+        A[i, 2] = math.exp(x[i])
+    
+    # Sistema normal: (A^T A) * a = A^T * y
+    ATA = np.dot(A.T, A)
+    ATy = np.dot(A.T, y)
+    
+    return ATA, ATy
 
 def solve_normal_system(m, b):
     try:
@@ -52,7 +73,7 @@ def compute_statistics(x, y, a):
 
 def main():
     # Leer datos usando lecturaDatos.py
-    archivo = input("datos.dat").strip()
+    archivo = "datos.dat"
     matriz = lecturaDatos.leerMatrizPrincipal(archivo)
     if not matriz:
         print("No se pudieron leer datos.")
@@ -92,6 +113,8 @@ def main():
     print(f"Error medio (st) = {st:.6g}")
     print(f"Coeficiente de determinación (R^2) = {r2:.6g}")
     print(f"Coeficiente de correlación (R) = {r:.6g}")
+    print(f"f(x) = {a[0]:.6f} + {a[1]:.6f}·x + {a[2]:.6f}·e^x")
+
 
 if __name__ == "__main__":
     main()
