@@ -1,50 +1,48 @@
 import math
 
 def f(x, y):
-    """Función diferencial: dy/dx = cos(x) + log(1 + x²)"""
-    #return math.cos(x) + math.log(1 + x**2)
-    return (1+x)*math.sqrt(y)
+    """Ecuación diferencial: dy/dx = (1 + x)*sqrt(y)"""
+    return (1 + x) * math.sqrt(y)
+
+def y_exacta(x):
+    """Solución analítica"""
+    return (1 + x/2 + x**2/4)**2
 
 def main():
-    # Entrada de datos
-    x_min = float(input("Ingrese el valor del límite inferior del intervalo de integración: "))
-    x_max = float(input("Ingrese el valor del límite superior del intervalo de integración: "))
-    N = int(input("Ingrese el número de puntos: "))
+    # Intervalo y condiciones iniciales
+    x_min = 0.0
+    x_max = 1.0
+    y0 = 1.0
+    h = 0.01  # paso
+    N = int((x_max - x_min)/h)
 
-    print(f"x_min={x_min}, x_max={x_max}, N={N}")
+    print(f"Integrando de x={x_min} a x={x_max} con h={h}, N={N} pasos")
 
-    h = 0.1
-    print(f"h={h:.12f}")
-
-    y0 = float(input("Ingrese el dato inicial y0: "))
-    print(f"y0={y0}")
-
-    # Inicialización de listas
-    x = [0.0] * (N + 1)
-    y = [0.0] * (N + 1)
-
+    # Inicialización
+    x = [0.0]*(N+1)
+    y = [0.0]*(N+1)
     x[0] = x_min
     y[0] = y0
 
-    # Método de Euler explícito
-    for j in range(1, N + 1):
-        x[j] = x_min + j * h
-        y[j] = y[j - 1] + h * f(x[j - 1], y[j - 1])
+    # Método de Euler
+    for j in range(1, N+1):
+        x[j] = x_min + j*h
+        y[j] = y[j-1] + h * f(x[j-1], y[j-1])
 
-    # Escritura de resultados en archivo
-    with open("datos.dat", "w") as file:
-        for j in range(N + 1):
-            file.write(f"{x[j]:.12f}  {y[j]:.12f}\n")
+    # Mostrar tabla cada Δx = 0.2 (cada 20 pasos)
+    print("\n  x\t\ty(Euler)\t\ty(exacta)\t\tError abs")
+    print("--------------------------------------------------------")
+    for j in range(0, N+1, 20):
+        err = abs(y_exacta(x[j]) - y[j])
+        print(f"{x[j]:.1f}\t\t{y[j]:.6f}\t\t{y_exacta(x[j]):.6f}\t\t{err:.6e}")
 
-    print("\nResultados guardados en 'datos.dat'.")
+    # Guardar resultados en archivo
+    with open("datos_euler.dat", "w") as f_out:
+        for j in range(N+1):
+            err = abs(y_exacta(x[j]) - y[j])
+            f_out.write(f"{x[j]:.6f}\t{y[j]:.6f}\t{y_exacta(x[j]):.6f}\t{err:.6e}\n")
 
-    I_real = 1.2345  # <-- cambiá por el valor exacto conocido
-    error_abs = abs(I_real - integral)
-    error_porcentual = abs(error_abs / I_real) * 100
-    
-    print(f"Error absoluto: {error_abs:.6f}")
-    print(f"Error porcentual: {error_porcentual:.3f}%")
-
+    print("\nResultados guardados en 'datos_euler.dat'.")
 
 if __name__ == "__main__":
     main()
