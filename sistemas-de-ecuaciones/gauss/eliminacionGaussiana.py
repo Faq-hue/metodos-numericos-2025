@@ -1,5 +1,7 @@
 import lecturaDatos
 import copy
+import math
+
 
 def determinante(A, tol=1e-10):
     n = len(A)
@@ -59,8 +61,41 @@ def gauss_eliminacion(A, b, tol=1e-10):
     
     return x
 
+def construir_matriz_normal(x, y):
+    """Genera la matriz y el vector del sistema normal para f(x)=a+b*x+c*e^x"""
+    n = len(x)
+    sum_x = sum(x)
+    sum_x2 = sum(xi**2 for xi in x)
+    sum_ex = sum(math.exp(xi) for xi in x)
+    sum_xex = sum(xi * math.exp(xi) for xi in x)
+    sum_e2x = sum(math.exp(2*xi) for xi in x)
+    sum_y = sum(y)
+    sum_xy = sum(xi * yi for xi, yi in zip(x, y))
+    sum_yex = sum(yi * math.exp(xi) for xi, yi in zip(x, y))
+
+    M = [
+        [n, sum_x, sum_ex],
+        [sum_x, sum_x2, sum_xex],
+        [sum_ex, sum_xex, sum_e2x]
+    ]
+    r = [sum_y, sum_xy, sum_yex]
+    return M, r
+
+def evaluar_ajuste(x, y, coef):
+    """Calcula residuos, SSE, RMSE y R2."""
+    a, b, c = coef
+    f = lambda xi: a + b*xi + c*math.exp(xi)
+    y_hat = [f(xi) for xi in x]
+    resid = [yi - yhi for yi, yhi in zip(y, y_hat)]
+    SSE = sum(r**2 for r in resid)
+    RMSE = math.sqrt(SSE / len(x))
+    y_mean = sum(y)/len(y)
+    SST = sum((yi - y_mean)**2 for yi in y)
+    R2 = 1 - SSE/SST
+    return resid, SSE, RMSE, R2
 
 def main():
+    '''
     A = lecturaDatos.leerMatrizPrincipal("../gauss/datos.dat")
     b = lecturaDatos.leerMatrizResultante("../gauss/datos2.dat")
 
@@ -80,6 +115,35 @@ def main():
             print(f"x{i+1} = {val:.6f}")
     except ValueError as e:
         print(e)
+''' 
+    #caso de que no me den los datos en forma de matriz normal
+    # Leer datos de archivos
+    x = lecturaDatos.leerMatrizResultante("datos.dat")
+    y = lecturaDatos.leerMatrizResultante("datos2.dat")
+
+    # Construir sistema normal
+    M, r = construir_matriz_normal(x, y)
+
+    # Resolver por eliminación gaussiana
+    M_copy = copy.deepcopy(M)
+    r_copy = r[:]
+    coef = gauss_eliminacion(M_copy, r_copy)
+
+    print("\nCoeficientes del ajuste:")
+    print(f"a = {coef[0]:.6f}, b = {coef[1]:.6f}, c = {coef[2]:.6f}")
+
+    # Evaluar ajuste
+    resid, SSE, RMSE, R2 = evaluar_ajuste(x, y, coef)
+    print("\nResiduos:", [round(r, 6) for r in resid])
+    print(f"\nSSE = {SSE:.6f}")
+    print(f"RMSE = {RMSE:.6f}")
+    print(f"R² = {R2:.6f}")
+
+    # Ejemplo: predecir valor
+    x_nuevo = 1.8
+    y_est = coef[0] + coef[1]*x_nuevo + coef[2]*math.exp(x_nuevo)
+    print(f"\nPredicción para x={x_nuevo}: y_est = {y_est:.6f}")
+    
 
 if __name__ == "__main__":
     main()

@@ -18,7 +18,7 @@ def integrar_simpson(archivo):
     # Verificar equiespaciado
     h = x[1] - x[0]
     for i in range(1, n - 1):
-        if abs((x[i + 1] - x[i]) - h) > 1e-10:
+        if abs((x[i + 1] - x[i]) - h) > 1e-6:
             print("Los puntos no están equiespaciados.")
             return
 
@@ -44,5 +44,5 @@ def integrar_simpson(archivo):
 
 
 if __name__ == "__main__":
-    archivo = input("Ingrese el nombre del archivo con los datos (por ejemplo datos.txt): ")
+    archivo = "datos.dat"
     integrar_simpson(archivo)

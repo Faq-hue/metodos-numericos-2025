@@ -2,7 +2,8 @@ import math
 
 def f(x, y):
     """Función diferencial: dy/dx = cos(x) + log(1 + x²)"""
-    return math.cos(x) + math.log(1 + x**2)
+    #return math.cos(x) + math.log(1 + x**2)
+    return (1+x)*math.sqrt(y)
 
 def main():
     # Entrada de datos
@@ -36,6 +37,14 @@ def main():
             file.write(f"{x[j]:.12f}  {y[j]:.12f}\n")
 
     print("\nResultados guardados en 'datos.dat'.")
+
+    I_real = 1.2345  # <-- cambiá por el valor exacto conocido
+    error_abs = abs(I_real - integral)
+    error_porcentual = abs(error_abs / I_real) * 100
+    
+    print(f"Error absoluto: {error_abs:.6f}")
+    print(f"Error porcentual: {error_porcentual:.3f}%")
+
 
 if __name__ == "__main__":
     main()

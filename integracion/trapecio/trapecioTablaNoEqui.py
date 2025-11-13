@@ -2,8 +2,8 @@ import math
 from lecturaDatos import leerMatrizResultante
 
 # --- Lectura de datos ---
-x = leerMatrizResultante("datosX.txt")
-y = leerMatrizResultante("datosY.txt")
+x = leerMatrizResultante("datosX.dat")
+y = leerMatrizResultante("datosY.dat")
 
 n = len(x)
 

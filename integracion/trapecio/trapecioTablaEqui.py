@@ -6,8 +6,8 @@ from lecturaDatos import leerMatrizPrincipal, leerMatrizResultante
 # datosX.txt → valores de x
 # datosY.txt → valores de y
 
-x = leerMatrizResultante("datosX.txt")   # o leerMatrizPrincipal si están en matriz
-y = leerMatrizResultante("datosY.txt")
+x = leerMatrizResultante("datosX.dat")   # o leerMatrizPrincipal si están en matriz
+y = leerMatrizResultante("datosY.dat")
 
 n = len(x)
 
