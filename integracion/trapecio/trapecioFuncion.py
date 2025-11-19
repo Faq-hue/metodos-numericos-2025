@@ -1,5 +1,7 @@
+import math
+
 def f(x):
-    return x
+    return math.sqrt(1+pow(x,2))
 
 def main():
     sum = 0
@@ -11,7 +13,7 @@ def main():
     b = 1
 
     #cantidad de intervalos
-    n = 6
+    n = 10
 
     h = (b-a)/n
 
