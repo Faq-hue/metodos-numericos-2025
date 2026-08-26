@@ -16,10 +16,9 @@ def diferencia_central(f, x, h=0.1):
 
 # ================================
 # Función a evaluar
-# f(x) = sqrt(1 + x^2)
 # ================================
 def f(x):
-    return math.sqrt(1 + x**2)
+    return math.exp(math.sqrt(1+x))*math.log(1+2*x**2)
 
 # Derivada exacta para comparar
 def f_derivada(x):
@@ -30,7 +29,8 @@ def f_derivada(x):
 # Ejecución principal
 # ================================
 if __name__ == "__main__":
-    x = 1
+    x = 0.25
+
     h = 0.1
 
     print("=== DERIVACIÓN NUMÉRICA ===")
@@ -41,6 +41,8 @@ if __name__ == "__main__":
     df_cent = diferencia_central(f, x, h)
 
     df_exacta = f_derivada(x)
+
+
 
     print(f"Diferencia progresiva : {df_prog}")
     print(f"Diferencia regresiva  : {df_reg}")

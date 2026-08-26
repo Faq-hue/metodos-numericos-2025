@@ -5,7 +5,8 @@ def f(x):
     # f(x) = (2 - x^3) * (x - 3)^2
     #return (2 - (x ** 3)) * ((x - 3) ** 2)
     #return math.sin(x+1)/(x+1)
-    return math.sin(2*x)*pow(math.e,-x)
+    #return math.sin(2*x)*pow(math.e,-x)
+    return math.exp(math.sqrt(1+x))*math.log(1+2*pow(x,2))
 
 # === Cambio de variable para Gauss-Legendre ===
 def g(x, a, b):
@@ -93,7 +94,10 @@ def main():
         # Cálculo de la cuadratura
         aprox = sum(w[i] * g(x[i], a, b) for i in range(len(w))) * dx
 
-        print(f"\nLa integral f(x) en el intervalo [{a}; {b}] es: {aprox:.6f}\n")
+        Iexacta = 1.6703641968
+        erroExacto = abs(Iexacta - aprox)
+        print(f"\nLa integral f(x) en el intervalo [{a}; {b}] es: {aprox:.8f}\n")
+        print(f"Error exacto: {erroExacto:.8f}\n")
 
 if __name__ == "__main__":
     main()
