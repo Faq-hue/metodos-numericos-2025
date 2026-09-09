@@ -68,6 +68,7 @@ if __name__ == "__main__":
     # Ejecutar interpolación
     coef = interpolacion_polinomial(x, y)
 
+
     # Evaluar el polinomio en un valor ingresado
     valorX = float(input("\nIngrese el valor de X: "))
     resultado = sum(coef[i] * (valorX**i) for i in range(len(coef)))

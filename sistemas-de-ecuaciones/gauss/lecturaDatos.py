@@ -25,10 +25,10 @@ def leerMatrizPrincipal(archivo):
     #imprimirMatrizPrincipal(matriz)
 
     #gauss seidel y jacobi
-    #return matriz, filas, max_columnas
+    return matriz, filas, max_columnas
     
     #eliminacion gaussiana
-    return matriz
+    #return matriz
 
 
 def imprimirMatrizPrincipal(matriz):

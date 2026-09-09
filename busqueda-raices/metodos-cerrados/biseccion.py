@@ -41,7 +41,7 @@ def biseccion(a,b,tolerancia):
 
         cviejo = c
 
-        if(error < tolerancia):
+        if(errorestimado < tolerancia):
             break
 
     print("la raiz es " + str(c))

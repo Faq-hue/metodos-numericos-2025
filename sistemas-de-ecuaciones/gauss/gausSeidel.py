@@ -15,8 +15,8 @@ def gauss_seidel(archivo_matriz, archivo_resultante):
     if len(b) != rows:
         raise ValueError("El vector resultante no coincide con la cantidad de filas de la matriz.")
 
-    xv = [0.0] * rows
-    xn = [0.0] * rows
+    xv = [1.0] * rows
+    xn = [1.0] * rows
 
     tolerance = int(input("Ingrese la cantidad de cifras decimales de exactitud: "))
     tolerance = 10 ** (-tolerance)

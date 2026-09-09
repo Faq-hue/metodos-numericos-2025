@@ -95,7 +95,7 @@ def evaluar_ajuste(x, y, coef):
     return resid, SSE, RMSE, R2
 
 def main():
-    '''
+    
     A = lecturaDatos.leerMatrizPrincipal("../gauss/datos.dat")
     b = lecturaDatos.leerMatrizResultante("../gauss/datos2.dat")
 
@@ -115,7 +115,7 @@ def main():
             print(f"x{i+1} = {val:.6f}")
     except ValueError as e:
         print(e)
-''' 
+
     #caso de que no me den los datos en forma de matriz normal
     # Leer datos de archivos
     x = lecturaDatos.leerMatrizResultante("datos.dat")

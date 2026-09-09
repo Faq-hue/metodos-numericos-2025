@@ -59,9 +59,16 @@ def evaluate_spline(coef, x_nodes, valor):
     for i in range(len(x_nodes)-1):
         if x_nodes[i] <= valor <= x_nodes[i+1]:
             a, b, c, d = coef[i]
-            return a + b*valor + c*valor**2 + d*valor**3
+            resultado = a + b*valor + c*valor**2 + d*valor**3
+            return resultado, i
     raise ValueError("El valor está fuera del rango de interpolación")
 
+def show_pol(coef, x_nodes, i):
+    a, b, c, d = coef[i]
+    sign = lambda v: "+" if v >= 0 else "-"
+    print(f"\nTramo usado: [{x_nodes[i]}, {x_nodes[i+1]}]")
+    print(f"S(x)={a:.6f} {sign(b)} {abs(b):.6f}*x"
+          f"{sign(c)} {abs(c):.6f}*x² {sign(d)} {abs(d):.6f}*x³")
 
 if __name__ == "__main__":
     archivo = "datos.dat"   # archivo con dos columnas: x y
@@ -79,7 +86,8 @@ if __name__ == "__main__":
         print(f"[{x[i]}, {x[i+1]}] -> {cfs}")
 
     valor = float(input("\nIngrese el valor que desea interpolar: "))
-    resultado = evaluate_spline(coef, x, valor)
+    resultado, tramo = evaluate_spline(coef, x, valor)
+    show_pol(coef, x, tramo)
     print(f"\nX = {valor},   S(X) = {resultado}")
 
     # --- Crear tabla equiespaciada usando el spline ---
